@@ -22,8 +22,8 @@ export default function Footer() {
   
   // Replace these with your actual contact information
   const contactInfo = {
-    email: "your.email@example.com",
-    phone: "+1234567890",
+    email: "rafikabir05.rk@gmail.com",
+    phone: "01777777777",
     whatsapp: "+1234567890",
     linkedin: "https://linkedin.com/in/your-profile",
     github: "https://github.com/your-username",
