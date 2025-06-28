@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from './ui/button'
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Code } from "lucide-react"
 
 
 
@@ -63,8 +63,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo - Left Side */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
-              Code<span className='text-secondary text-3xl'>_</span>Blog<span className='text-secondary text-3xl'>.</span>
+            <Link href="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"> 
+            <div className="flex items-center space-x-2">
+              <Code className="h-8 w-8 text-secondary dark:text-secondary" />
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                Code<span className='text-secondary font-bold dark:text-secondary'>_</span>Blog<span className='text-secondary font-bold dark:text-secondary'>.</span>
+              </h3>
+            </div>
             </Link>
           </div>
           
@@ -107,8 +112,8 @@ const Navbar = () => {
                 </span>
             </Link>
             <div className='flex items-center space-x-2'>
-              <Button variant="outline" className="hover:text-secondary shadow-red-500/50">Log in</Button>
-              <Button variant="outline" className="hover:text-secondary shadow-red-500/50">Sign up</Button>
+              <Button variant="outline" className="hover:text-secondary shadow-red-800/50">Log in</Button>
+              <Button variant="outline" className="hover:text-secondary shadow-red-800/50">Sign up</Button>
               <ModeToggle />
             </div>
           </div>

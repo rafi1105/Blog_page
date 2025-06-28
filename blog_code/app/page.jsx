@@ -224,7 +224,7 @@ export default function Home() {
 
           </p>
           
-          <div className="mt-6 bg-transparent border-2 shadow-2xl shadow-gray-700/50 dark:shadow-red-700/40 rounded-lg dark:border-gray-700 lg:max-w-2/3  lg:max-h-20 focus-within:border-primary focus-within:ring focus-within:ring-primary dark:focus-within:border-primary focus-within:ring-opacity-20 backdrop-blur-sm ">
+          <div className="mt-6 bg-transparent border-2 shadow-2xl shadow-gray-700/50 dark:shadow-red-700/40 rounded-lg dark:border-gray-700 lg:max-w-110  lg:max-h-35 max-sm:w-full max-md:w-full focus-within:border-secondary focus-within:ring focus-within:ring-secondary dark:focus-within:border-secondary focus-within:ring-opacity-20 backdrop-blur-sm ">
             <form 
               onSubmit={handleSearch}
               className="flex flex-wrap justify-between md:flex-row "
@@ -241,7 +241,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSearching}
-                className="flex items-center justify-center min-w-15 p-2 m-1 backdrop-blur-sm transition-colors duration-300 transform rounded-lg lg:max-w-15 lg:max-h-12 lg:p-0 bg-secondary text-white focus:outline-secondary disabled:opacity-50"
+                className="flex items-center justify-center min-w-14 p-2 m-1 backdrop-blur-sm transition-colors duration-300 transform rounded-lg lg:max-w-15 lg:max-h-12 lg:p-0 bg-secondary text-white focus:outline-secondary disabled:opacity-50"
               >
                 {isSearching ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -317,13 +317,7 @@ export default function Home() {
                 Discover our latest articles and tutorials
               </p>
             </div>
-            <Link
-              href="/blog"
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-            >
-              <span>View All Posts</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            
           </div>
           
           {isLoadingPosts ? (
@@ -407,7 +401,7 @@ export default function Home() {
                   {["React", "Next.js", "Node.js", "Sass", "MongoDB", "Tailwind CSS", "Python", "Mechine Learning"].map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1 bg-red-600 dark:bg-red-700 text-red-100 dark:text-red-100 rounded-full text-sm font-medium"
+                      className="px-3 py-1 bg-blue-600 dark:bg-blue-600 text-red-100 dark:text-red-100 rounded-full text-sm font-medium"
                     >
                       {skill}
                     </span>
