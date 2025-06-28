@@ -98,12 +98,12 @@ export default function Home() {
         </div>
         
         <div className="w-full mt-4 lg:mt-0 lg:w-1/2  ">
-          <div className="w-full h-full max-w-md mx-auto">
+          <div className="w-full h-full max-w-md mx-auto ">
             <Lottie
               animationData={animationData}
               loop={true}
               autoplay={true}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
             />
           </div>
         </div>
