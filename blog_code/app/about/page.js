@@ -4,6 +4,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
+  Phone,
+  Download,
   Code, 
   Coffee, 
   Heart, 
@@ -34,7 +36,7 @@ const About = () => {
   const achievements = [
     {
       icon: <Code className="w-8 h-8" />,
-      title: "500+ Projects",
+      title: "10+ Projects",
       description: "Successfully delivered projects for clients worldwide"
     },
     {
@@ -108,41 +110,135 @@ const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card to-muted">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-                Hey, I'm{" "}
-                <span className="text-orange-600">Alex</span>
-                <span className="text-orange-600 text-5xl md:text-6xl lg:text-7xl">.</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-                A passionate <span className="text-orange-600 font-semibold">Full Stack Developer</span> and 
-                <span className="text-orange-600 font-semibold"> Open Source Advocate</span> who loves 
-                building amazing web experiences and sharing knowledge with the community.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link 
-                  href="#contact"
-                  className="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors font-semibold"
-                >
-                  Get In Touch
-                </Link>
-                <Link 
-                  href="/blog"
-                  className="border border-orange-600 text-orange-600 px-8 py-3 rounded-lg hover:bg-orange-600 hover:text-white transition-colors font-semibold"
-                >
-                  Read My Blog
-                </Link>
+     <section className="container mx-auto px-4 py-12">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            
+            {/* Profile Picture */}
+            <div className="flex justify-center lg:justify-start">
+              <div className="relative">
+                <div className="w-68 h-98 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl shadow-red-500/100">
+                  <Image
+                    src="/rafi.jpg" // Replace with your actual profile image
+                    alt="Profile Picture"
+                    width={350}
+                    height={350}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                
               </div>
             </div>
-            <div className="flex justify-center">
-              <div className="relative">
-                <div className="w-80 h-80 bg-gradient-to-r from-orange-400 to-red-500 rounded-full opacity-20 absolute -top-4 -left-4"></div>
-                <div className="w-72 h-72 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center relative">
-                  <Code className="w-32 h-32 text-orange-600" />
+
+            {/* Personal Information */}
+            <div className="lg:col-span-2 text-center lg:text-left">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                 Rafi Kabir
+                </h2>
+                <p className="text-xl text-red-600 dark:text-red-400 font-semibold mb-2">
+                  Full Stack Developer & Technical Writer
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                  Passionate developer with 5+ years of experience in building modern web applications. 
+                  I love sharing knowledge through blog posts and creating innovative solutions with React, Next.js, and Node.js.
+                </p>
+              </div>
+
+              {/* Contact Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="flex items-center justify-center lg:justify-start space-x-3">
+                  <Mail className="h-5 w-5 text-red-500" />
+                  <span className="text-gray-700 dark:text-gray-300">rafikabir05.rk@gmail.com</span>
                 </div>
+                <div className="flex items-center justify-center lg:justify-start space-x-3">
+                  <Phone className="h-5 w-5 text-red-500" />
+                  <span className="text-gray-700 dark:text-gray-300">+1 (555) 123-4567</span>
+                </div>
+                <div className="flex items-center justify-center lg:justify-start space-x-3">
+                  <MapPin className="h-5 w-5 text-red-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Dhaka, Bangladesh</span>
+                </div>
+                <div className="flex items-center justify-center lg:justify-start space-x-3">
+                  <Calendar className="h-5 w-5 text-red-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Available for Projects</span>
+                </div>
+              </div>
+
+              {/* Skills/Technologies */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Technologies & Skills
+                </h3>
+                <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                  {["React", "Next.js", "Node.js", "Sass", "MongoDB", "Tailwind CSS", "Python", "Mechine Learning"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 bg-blue-600 dark:bg-blue-600 text-red-100 dark:text-red-100 rounded-full text-sm font-medium"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a
+                  href="/cv/John_Doe_CV.pdf" // Replace with your actual CV path
+                  download="John_Doe_CV.pdf"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-red-800 hover:bg-red-900 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  Download CV
+                </a>
+                
+                <div className="flex space-x-3">
+                  <a
+                    href="https://github.com/your-username" // Replace with your GitHub
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-4 py-3 hover:text-purple-700 hover:bg-transparent bg-purple-700 p-2 text-white rounded-lg transition-colors duration-200"
+                  >
+                    <Github className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/your-profile" // Replace with your LinkedIn
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-4 py-3 hover:text-blue-500 hover:bg-transparent bg-blue-500 p-2 text-white rounded-lg transition-colors duration-200"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center px-4 py-3 hover:text-red-600 hover:bg-transparent bg-red-600 p-2 text-white rounded-lg transition-colors duration-200"
+                  >
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Section */}
+          <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              <div>
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">50+</div>
+                <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">Projects Completed</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-green-600 dark:text-green-400">5+</div>
+                <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">Years Experience</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">100+</div>
+                <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">Blog Posts</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">10K+</div>
+                <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">Readers</div>
               </div>
             </div>
           </div>
@@ -290,58 +386,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-500 to-red-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Let's Build Something Amazing Together
-          </h2>
-          <p className="text-xl text-white/90 mb-8">
-            I'm always excited to work on new projects and collaborate with fellow developers.
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            <Link 
-              href="mailto:alex@codeblog.dev"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              Email Me
-            </Link>
-            <Link 
-              href="https://github.com/alexdev"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-            >
-              <Github className="w-5 h-5" />
-              GitHub
-            </Link>
-            <Link 
-              href="https://twitter.com/alexdev"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-            >
-              <Twitter className="w-5 h-5" />
-              Twitter
-            </Link>
-            <Link 
-              href="https://linkedin.com/in/alexdev"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-white/20 transition-colors"
-            >
-              <Linkedin className="w-5 h-5" />
-              LinkedIn
-            </Link>
-          </div>
-          
-          <div className="text-white/80">
-            <p className="mb-2">Currently available for:</p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <span className="bg-white/10 px-3 py-1 rounded-full">Freelance Projects</span>
-              <span className="bg-white/10 px-3 py-1 rounded-full">Technical Consulting</span>
-              <span className="bg-white/10 px-3 py-1 rounded-full">Speaking Engagements</span>
-              <span className="bg-white/10 px-3 py-1 rounded-full">Open Source Collaboration</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    
     </div>
   )
 }

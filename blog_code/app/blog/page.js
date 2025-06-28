@@ -174,10 +174,12 @@ export default function BlogPage() {
         
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
-            Code<span className="text-orange-500">_</span>Blog
-            <span className="text-orange-500 text-5xl md:text-7xl">.</span>
-          </h1>
+          <div className="flex items-center justify-center space-x-2 my-3">
+                        <Code className="h-15 w-15 text-secondary dark:text-secondary" />
+                        <h3 className="text-4xl font-bold text-gray-900 dark:text-white">
+                          Code<span className='text-secondary font-bold dark:text-secondary'>_</span>Blog<span className='text-secondary font-bold dark:text-secondary'>.</span>
+                        </h3>
+                      </div>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Discover the latest in web development, coding tutorials, and open-source projects. 
             Join our community of developers sharing knowledge and building amazing things.
@@ -221,9 +223,9 @@ export default function BlogPage() {
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Featured Posts</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {featuredPosts.map((post) => (
+              {featuredPosts.map((post, index) => (
                 <div
-                  key={post.id}
+                  key={post._id || post.id || `featured-post-${index}`}
                   className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:bg-white/80 dark:hover:bg-gray-800/80"
                 >
                   <div className="relative overflow-hidden">
@@ -254,9 +256,9 @@ export default function BlogPage() {
                     
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map((tag) => (
+                      {post.tags.map((tag, index) => (
                         <span
-                          key={tag}
+                          key={`${post._id || post.id || 'featured'}-tag-${index}-${tag}`}
                           className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-md"
                         >
                           {tag}
@@ -319,9 +321,9 @@ export default function BlogPage() {
               </Link>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {userBlogPosts.slice(0, 6).map((post) => (
+              {userBlogPosts.slice(0, 6).map((post, index) => (
                 <div
-                  key={post._id || post.id}
+                  key={post._id || post.id || `user-post-${index}`}
                   className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:bg-white/80 dark:hover:bg-gray-800/80"
                 >
                   <div className="relative overflow-hidden h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900">
@@ -360,7 +362,7 @@ export default function BlogPage() {
                     <div className="flex flex-wrap gap-1 mb-4">
                       {(post.tags || []).slice(0, 3).map((tag, index) => (
                         <span
-                          key={index}
+                          key={`${post._id || post.id || 'post'}-tag-${index}-${tag}`}
                           className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
                         >
                           {tag}
@@ -424,9 +426,9 @@ export default function BlogPage() {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
+            {filteredPosts.map((post, index) => (
               <article
-                key={post.id}
+                key={post._id || post.id || `filtered-post-${index}`}
                 className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group hover:bg-white/80 dark:hover:bg-gray-800/80"
               >
                 <div className="relative overflow-hidden">
@@ -459,9 +461,9 @@ export default function BlogPage() {
                   
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-4">
-                    {post.tags.slice(0, 3).map((tag) => (
+                    {post.tags.slice(0, 3).map((tag, index) => (
                       <span
-                        key={tag}
+                        key={`${post._id || post.id || 'filtered'}-tag-${index}-${tag}`}
                         className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
                       >
                         {tag}
@@ -539,9 +541,9 @@ export default function BlogPage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {repositories.map((repo) => (
+            {repositories.map((repo, index) => (
               <div
-                key={repo.id}
+                key={repo.id || `repo-${index}`}
                 className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/80 dark:hover:bg-gray-800/80"
               >
                 <div className="flex items-start justify-between mb-4">
@@ -561,9 +563,9 @@ export default function BlogPage() {
                 </p>
                 
                 <div className="flex flex-wrap gap-1 mb-4">
-                  {repo.topics.slice(0, 3).map((topic) => (
+                  {repo.topics.slice(0, 3).map((topic, index) => (
                     <span
-                      key={topic}
+                      key={`${repo.id || 'repo'}-topic-${index}-${topic}`}
                       className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded"
                     >
                       {topic}

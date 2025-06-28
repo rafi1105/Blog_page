@@ -56,13 +56,13 @@ export default function Home() {
     },
     {
       id: 3,
-      title: "Tailwind CSS Best Practices for 2024",
-      excerpt: "Discover the latest Tailwind CSS techniques and best practices to write maintainable and scalable CSS.",
+      title: "Community Posts and Open Source Collaboration",
+      excerpt: "Discover how community posts drive open source projects and foster collaboration among developers worldwide.",
       author: "Mike Johnson",
       date: "2024-01-10",
       readTime: "6 min read",
-      category: "CSS",
-      tags: ["Tailwind", "CSS", "Design"],
+      category: "Community",
+      tags: ["Community", "Open Source", "Collaboration"],
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop",
       featured: false,
       views: 756
@@ -105,6 +105,19 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&h=400&fit=crop",
       featured: false,
       views: 643
+    },
+    {
+      id: 7,
+      title: "Building Community-Driven Posts Platform",
+      excerpt: "A comprehensive guide to building platforms that encourage community posts and user-generated content for better engagement.",
+      author: "David Brown",
+      date: "2024-01-07",
+      readTime: "9 min read",
+      category: "Community",
+      tags: ["Community", "Posts", "Platform", "Engagement"],
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=400&fit=crop",
+      featured: true,
+      views: 1125
     }
   ];
 
@@ -155,14 +168,43 @@ export default function Home() {
       const allPosts = [...mongodbPosts, ...sampleBlogPosts];
 
       // Filter posts based on search query
-      const filtered = allPosts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.content?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        post.author.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      const filtered = allPosts.filter(post => {
+        const searchTerm = searchQuery.toLowerCase().trim();
+        
+        // Safe string checking with fallbacks
+        const title = (post.title || '').toLowerCase();
+        const excerpt = (post.excerpt || post.description || '').toLowerCase();
+        const content = (post.content || '').toLowerCase();
+        const category = (post.category || '').toLowerCase();
+        const author = (post.author || '').toLowerCase();
+        
+        // Safe array checking for tags
+        const tags = Array.isArray(post.tags) ? post.tags : [];
+        const tagMatch = tags.some(tag => (tag || '').toLowerCase().includes(searchTerm));
+        
+        // Split search term into individual words for better matching
+        const searchWords = searchTerm.split(/\s+/);
+        
+        // Check if all search words are found in any of the fields
+        const matchesAllWords = searchWords.every(word => {
+          return title.includes(word) ||
+                 excerpt.includes(word) ||
+                 content.includes(word) ||
+                 category.includes(word) ||
+                 author.includes(word) ||
+                 tags.some(tag => (tag || '').toLowerCase().includes(word));
+        });
+        
+        // Also check for exact phrase match (original logic)
+        const exactPhraseMatch = title.includes(searchTerm) ||
+                                excerpt.includes(searchTerm) ||
+                                content.includes(searchTerm) ||
+                                category.includes(searchTerm) ||
+                                author.includes(searchTerm) ||
+                                tagMatch;
+        
+        return exactPhraseMatch || matchesAllWords;
+      });
 
       setSearchResults(filtered);
     } catch (error) {
