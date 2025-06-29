@@ -263,10 +263,9 @@ export default function Home() {
             Open source porject and components increase{" "}
             <br className="hidden lg:block" /> 
             reuseablity your new apps, projects or landing sites <span className="text-secondary  font-bold dark:text-secondary "> !</span>
-
           </p>
           
-          <div className="mt-6 bg-transparent border-2 shadow-2xl shadow-gray-700/50 dark:shadow-red-700/40 rounded-lg dark:border-gray-700 lg:max-w-110  lg:max-h-35 max-sm:w-full max-md:w-full focus-within:border-secondary focus-within:ring focus-within:ring-secondary dark:focus-within:border-secondary focus-within:ring-opacity-20 backdrop-blur-sm ">
+          <div className="mt-6 bg-transparent border-2 shadow-2xl shadow-gray-700/50 dark:shadow-red-700/40 rounded-lg dark:border-gray-700 lg:max-w-110  lg:max-h-35 max-sm:w-full max-md:w-full">
             <form 
               onSubmit={handleSearch}
               className="flex flex-wrap justify-between md:flex-row "
@@ -278,12 +277,12 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search Posts, Components, Blogs..."
                 required
-                className="flex-1 max-h-10 px-5 m-1 text-gray-700 lg:w-1 placeholder dark:placeholder-white  bg-transparent border-none appearance-none lg:h-10 dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0  active:backdrop-blur-md  active:bg-transparent"
+                className="flex-1 max-h-10 px-5 m-1 text-gray-700 lg:w-1 placeholder dark:placeholder-white  bg-transparent border-none appearance-none lg:h-10 dark:text-gray-200 focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={isSearching}
-                className="flex items-center justify-center min-w-14 p-2 m-1 backdrop-blur-sm transition-colors duration-300 transform rounded-lg lg:max-w-15 lg:max-h-12 lg:p-0 bg-secondary text-white focus:outline-secondary disabled:opacity-50"
+                className="flex items-center justify-center min-w-14 p-2 m-1 backdrop-blur-sm transition-colors duration-300 transform rounded-lg lg:max-w-15 lg:max-h-12 lg:p-0 bg-secondary text-white hover:bg-secondary/80"
               >
                 {isSearching ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -306,8 +305,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
 
       {/* Search Results Section */}
       {showSearchResults && (
@@ -359,7 +356,6 @@ export default function Home() {
                 Discover our latest articles and tutorials
               </p>
             </div>
-            
           </div>
           
           {isLoadingPosts ? (
@@ -376,9 +372,8 @@ export default function Home() {
             </div>
           )}
         </section>
-        
       )}
-            {/* Personal Info Section */}
+      {/* Personal Info Section */}
       <section className="container mx-auto px-4 py-12">
         <div className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 md:p-12 shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
@@ -395,7 +390,6 @@ export default function Home() {
                     className="object-cover w-full h-full"
                   />
                 </div>
-                
               </div>
             </div>
 
