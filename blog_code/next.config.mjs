@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  basePath: '/Blog_page',
+  assetPrefix: '/Blog_page/',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -21,6 +26,10 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  // Skip API routes during static export
+  generateBuildId: async () => {
+    return 'build-id'
   },
 };
 

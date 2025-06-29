@@ -251,7 +251,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">About Me</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              I'm a developer who believes in the power of technology to solve real-world problems 
+              I&apos;m a developer who believes in the power of technology to solve real-world problems 
               and create meaningful experiences.
             </p>
           </div>
@@ -260,14 +260,14 @@ const About = () => {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">My Journey</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                With over 5 years of experience in web development, I've had the privilege of working 
+                With over 5 years of experience in web development, I&apos;ve had the privilege of working 
                 with startups, Fortune 500 companies, and everything in between. My journey began with 
                 a simple HTML page and has evolved into building complex, scalable applications that 
                 serve millions of users.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                I'm passionate about clean code, user experience, and the latest web technologies. 
-                When I'm not coding, you'll find me writing technical articles, contributing to open 
+                I&apos;m passionate about clean code, user experience, and the latest web technologies. 
+                When I&apos;m not coding, you&apos;ll find me writing technical articles, contributing to open 
                 source projects, or mentoring aspiring developers.
               </p>
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
@@ -310,7 +310,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Achievements</h2>
             <p className="text-lg text-muted-foreground">
-              Some milestones I'm proud of in my journey as a developer.
+              Some milestones I&apos;m proud of in my journey as a developer.
             </p>
           </div>
           

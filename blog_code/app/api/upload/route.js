@@ -3,6 +3,8 @@ import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { existsSync } from 'fs'
 
+export const dynamic = 'force-static'
+
 export async function POST(request) {
   try {
     const data = await request.formData()

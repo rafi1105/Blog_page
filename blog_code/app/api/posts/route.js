@@ -1,6 +1,8 @@
 import connectDB from '../../../lib/mongodb'
 import BlogPost from '../../../models/BlogPost'
 
+export const dynamic = 'force-static'
+
 export async function GET(request) {
   try {
     await connectDB()
