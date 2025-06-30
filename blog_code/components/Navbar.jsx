@@ -42,11 +42,11 @@ function ModeToggle() {
       variant="outline" 
       size="icon" 
       onClick={toggleDarkMode}
-      className="relative"
+      className="relative bg-white/10 dark:bg-white/5 backdrop-blur-md border-white/20 dark:border-white/10 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20"
       aria-label="Toggle dark mode"
     >
-      <Sun className={`h-[1.2rem] w-[1.2rem] transition-all ${isDarkMode ? 'scale-0 rotate-90' : 'scale-100 rotate-0'}`} />
-      <Moon className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${isDarkMode ? 'scale-100 rotate-0' : 'scale-0 -rotate-90'}`} />
+      <Sun className={`h-[1.2rem] w-[1.2rem] transition-all duration-500 ${isDarkMode ? 'scale-0 rotate-90' : 'scale-100 rotate-0'} text-yellow-400`} />
+      <Moon className={`absolute h-[1.2rem] w-[1.2rem] transition-all duration-500 ${isDarkMode ? 'scale-100 rotate-0' : 'scale-0 -rotate-90'} text-blue-400`} />
     </Button>
   )
 }
@@ -58,16 +58,16 @@ const Navbar = () => {
   }
 
   return (
-    <nav className=" border-b border-border shadow-sm sticky top-0 z-50 backdrop-blur-sm flex items-center" >
+    <nav className="bg-white/10 dark:bg-black/20 backdrop-blur-md border-b border-white/20 dark:border-white/10 shadow-lg shadow-blue-500/10 sticky top-0 z-50 flex items-center" >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16">
           {/* Logo - Left Side */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"> 
-            <div className="flex items-center space-x-2">
-              <Code className="h-8 w-8 text-secondary dark:text-secondary" />
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                Code<span className='text-secondary font-bold dark:text-secondary'>_</span>Blog<span className='text-secondary font-bold dark:text-secondary'>.</span>
+            <Link href="/" className="text-2xl font-bold text-black dark:text-white hover:text-black/80 dark:hover:text-white/80 transition-all duration-300 hover:scale-105"> 
+            <div className="flex items-center space-x-2 group">
+              <Code className="h-8 w-8 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-all duration-300 group-hover:rotate-12" />
+              <h3 className="text-xl font-bold text-black dark:text-white">
+                Code<span className='text-blue-500 dark:text-blue-400 font-bold animate-pulse'>_</span>Blog<span className='text-blue-500 dark:text-blue-400 font-bold'>.</span>
               </h3>
             </div>
             </Link>
@@ -77,43 +77,43 @@ const Navbar = () => {
           <div className="hidden md:flex  items-center  space-x-8 ">
             <Link 
                 href="/" 
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium group"
+                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium group relative"
             >
                <span className="relative">
                 Home
-                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-secondary  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded"></span>
+                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded shadow-sm shadow-blue-500/50"></span>
                  </span>
             </Link>
             <Link 
                href="/blog"                                                  
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium group"
+                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium group relative"
             >
                 <span className="relative">
                 Blog
-                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-secondary  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded"></span>
+                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded shadow-sm shadow-blue-500/50"></span>
                  </span>
             </Link>
             <Link 
                 href="/about" 
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium group"
+                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium group relative"
             >
                 <span className="relative">
                 About
-                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-secondary  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded"></span>
+                 <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded shadow-sm shadow-blue-500/50"></span>
                  </span>
             </Link>
             <Link 
                 href="/content" 
-                className="text-foreground hover:text-primary font-medium relative transition-colors duration-200 group"
+                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium relative transition-all duration-300 group"
             >
                 <span className="relative">
                     Content
-                    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-secondary  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded"></span>
+                    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded shadow-sm shadow-blue-500/50"></span>
                 </span>
             </Link>
             <div className='flex items-center space-x-2'>
-              <Button variant="outline" className="hover:text-secondary shadow-red-800/50">Log in</Button>
-              <Button variant="outline" className="hover:text-secondary shadow-red-800/50">Sign up</Button>
+              <Button variant="outline" className="bg-white/10 dark:bg-white/5 border-white/20 dark:border-white/10 text-black dark:text-white hover:bg-blue-500/20 dark:hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 backdrop-blur-sm">Log in</Button>
+              <Button variant="outline" className="bg-white/10 dark:bg-white/5 border-white/20 dark:border-white/10 text-black dark:text-white hover:bg-blue-500/20 dark:hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 backdrop-blur-sm">Sign up</Button>
               <ModeToggle />
             </div>
           </div>
@@ -123,11 +123,11 @@ const Navbar = () => {
             <ModeToggle />
             <button 
               onClick={toggleMobileMenu}
-              className="text-foreground hover:text-primary transition-colors duration-200 p-2"
+              className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 p-2 hover:bg-white/20 dark:hover:bg-white/10 rounded-lg hover:scale-110"
               aria-label="Toggle mobile menu"
             >
               <svg 
-                className={`w-6 h-6 transform transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-90' : ''}`} 
+                className={`w-6 h-6 transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-90 scale-110' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -143,43 +143,43 @@ const Navbar = () => {
         </div>
         
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${
+        <div className={`md:hidden transition-all duration-500 ease-in-out ${
           isMobileMenuOpen 
             ? 'max-h-60 opacity-100 pb-4' 
             : 'max-h-0 opacity-0 overflow-hidden'
         }`}>
-          <div className="space-y-2 pt-2 border-t border-border/50">
+          <div className="space-y-2 pt-2 border-t border-white/20 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-sm rounded-lg mt-2">
             <Link 
               href="/" 
-              className="block px-3 py-2 text-foreground hover:text-secondaryhover:bg-muted/50 rounded-md transition-colors duration-200 font-medium"
+              className="block px-3 py-2 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 dark:hover:bg-blue-500/10 rounded-md transition-all duration-300 font-medium hover:scale-105"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
             </Link>
              <Link 
               href="/blog" 
-              className="block px-3 py-2 text-foreground hover:text-secondary hover:bg-muted/50 rounded-md transition-colors duration-200 font-medium"
+              className="block px-3 py-2 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 dark:hover:bg-blue-500/10 rounded-md transition-all duration-300 font-medium hover:scale-105"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Blog
             </Link>
             <Link 
               href="/about" 
-              className="block px-3 py-2 text-foreground hover:text-secondary hover:bg-muted/50 rounded-md transition-colors duration-200 font-medium"
+              className="block px-3 py-2 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 dark:hover:bg-blue-500/10 rounded-md transition-all duration-300 font-medium hover:scale-105"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
             </Link>
             <Link 
               href="/content" 
-              className="block px-3 py-2 text-foreground hover:bg-muted/50 rounded-md transition-colors duration-200 font-medium hover:text-red-500"
+              className="block px-3 py-2 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 dark:hover:bg-blue-500/10 rounded-md transition-all duration-300 font-medium hover:scale-105"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Content
             </Link>
             <div className='flex space-x-2 px-3 py-2 '>
-              <Button variant="outline" className="flex hover:text-secondary shadow-red-500/50 ">Log in</Button>
-              <Button variant="outline" className="flex hover:text-secondary shadow-red-500/50">Sign up</Button>
+              <Button variant="outline" className="bg-white/10 dark:bg-white/5 border-white/20 dark:border-white/10 text-black dark:text-white hover:bg-blue-500/20 dark:hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 backdrop-blur-sm">Log in</Button>
+              <Button variant="outline" className="bg-white/10 dark:bg-white/5 border-white/20 dark:border-white/10 text-black dark:text-white hover:bg-blue-500/20 dark:hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 backdrop-blur-sm">Sign up</Button>
             </div>
           </div>
         </div>

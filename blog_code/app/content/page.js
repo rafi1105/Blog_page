@@ -57,50 +57,97 @@ export default function ContentPage() {
 
   // Fetch blog posts from MongoDB API with fallback
   const fetchBlogPosts = async () => {
-    setIsLoading(true)
-    setError(null)
+    setIsLoading(true);
+    setError(null);
+    
+    // Check if we're in a static export environment
+    const isStaticMode = typeof window !== 'undefined' && 
+      (window.location.protocol === 'file:' || 
+       process.env.NODE_ENV === 'production' && !window.location.hostname.includes('localhost'));
+    
+    if (isStaticMode) {
+      // Skip API call in static mode, go directly to localStorage
+      console.log('Static mode detected, using localStorage');
+      try {
+        const storedPosts = localStorage.getItem('blogPosts');
+        if (storedPosts) {
+          setBlogPosts(JSON.parse(storedPosts));
+          setError('Using local storage (Static mode)');
+        } else {
+          setBlogPosts([]);
+          setError('No posts found - create your first post below');
+        }
+      } catch (localStorageError) {
+        console.error('Error reading from localStorage:', localStorageError);
+        setBlogPosts([]);
+        setError('Failed to load posts');
+      }
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch('/api/posts')
+      // Add timeout and better error handling for the fetch
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+      const response = await fetch('/api/posts', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+        cache: 'no-cache'
+      });
+
+      clearTimeout(timeoutId);
       
       // Check if we got an HTML error page instead of JSON
-      const contentType = response.headers.get('content-type')
+      const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('API not available - using local storage fallback')
+        throw new Error('API not available - invalid content type');
       }
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const result = await response.json()
+      const result = await response.json();
       
       if (result.success) {
-        setBlogPosts(result.data)
+        setBlogPosts(result.data);
+        setError(null);
       } else {
-        setError(result.error || 'Failed to fetch blog posts')
+        console.warn('API returned error, falling back to localStorage:', result.error);
+        throw new Error('API returned error');
       }
     } catch (error) {
-      console.error('Error fetching blog posts:', error)
+      // Only log as warning since fallback is expected in some environments
+      if (error.name === 'AbortError') {
+        console.warn('API request timed out, using localStorage fallback');
+      } else {
+        console.warn('API not available, using localStorage fallback:', error.message);
+      }
       
       // Fallback to localStorage when API is not available
       try {
-        const storedPosts = localStorage.getItem('blogPosts')
+        const storedPosts = localStorage.getItem('blogPosts');
         if (storedPosts) {
-          setBlogPosts(JSON.parse(storedPosts))
-          setError('Using local storage (API unavailable)')
+          setBlogPosts(JSON.parse(storedPosts));
+          setError('Using local storage (API unavailable)');
         } else {
-          setBlogPosts([])
-          setError('No posts found - create your first post below')
+          setBlogPosts([]);
+          setError('No posts found - create your first post below');
         }
       } catch (localStorageError) {
-        console.error('Error reading from localStorage:', localStorageError)
-        setBlogPosts([])
-        setError('Failed to load posts')
+        console.error('Error reading from localStorage:', localStorageError);
+        setBlogPosts([]);
+        setError('Failed to load posts');
       }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // Load blog posts on component mount
   useEffect(() => {
@@ -245,7 +292,7 @@ export default function ContentPage() {
           setTimeout(() => setSubmitStatus(null), 5000)
         }
       } catch (apiError) {
-        console.warn('API not available, saving to localStorage:', apiError)
+        console.warn('API not available, saving to localStorage:', apiError.message)
         
         // Fallback to localStorage
         const newPost = {

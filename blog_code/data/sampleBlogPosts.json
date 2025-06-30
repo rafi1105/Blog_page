@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "title": "Getting Started with Next.js",
+    "content": "Next.js is a powerful React framework that enables you to build full-stack web applications. It provides features like server-side rendering, static site generation, and API routes out of the box.",
+    "author": "John Doe",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "tags": ["Next.js", "React", "Web Development"],
+    "imageUrl": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop"
+  },
+  {
+    "id": "2",
+    "title": "MongoDB Integration Guide",
+    "content": "Learn how to integrate MongoDB with your Next.js application for robust data management. This guide covers connection setup, CRUD operations, and best practices.",
+    "author": "Jane Smith",
+    "createdAt": "2024-01-20T14:45:00Z",
+    "tags": ["MongoDB", "Database", "Backend"],
+    "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=200&fit=crop"
+  },
+  {
+    "id": "3",
+    "title": "Modern UI with Glassmorphism",
+    "content": "Explore the trending glassmorphism design pattern and how to implement it in your web applications using CSS and modern frameworks.",
+    "author": "Alex Johnson",
+    "createdAt": "2024-01-25T09:15:00Z",
+    "tags": ["UI/UX", "CSS", "Design"],
+    "imageUrl": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop"
+  },
+  {
+    "id": "4",
+    "title": "Advanced React Hooks",
+    "content": "Deep dive into React hooks beyond useState and useEffect. Learn about useCallback, useMemo, useRef, and custom hooks to optimize your React applications.",
+    "author": "Sarah Wilson",
+    "createdAt": "2024-02-01T16:20:00Z",
+    "tags": ["React", "Hooks", "Performance"],
+    "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=200&fit=crop"
+  },
+  {
+    "id": "5",
+    "title": "Deployment Strategies",
+    "content": "Compare different deployment strategies for Next.js applications including Vercel, Netlify, GitHub Pages, and traditional hosting solutions.",
+    "author": "Mike Chen",
+    "createdAt": "2024-02-05T11:30:00Z",
+    "tags": ["Deployment", "DevOps", "Hosting"],
+    "imageUrl": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=200&fit=crop"
+  }
+]
