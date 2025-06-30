@@ -8,6 +8,7 @@ import Link from "next/link";
 import Lottie from "lottie-react";
 import animationData from "../Animation - 1751031313621.json";
 import { getAssetPath } from "../lib/useBasePath";
+import { shouldSkipAPI } from "../lib/environment";
 
 export default function Home() {
   const texts = ["Tailwind CSS", "Mechine Learning", "Python", "JavaScript"];
@@ -125,6 +126,14 @@ export default function Home() {
   // Fetch posts from MongoDB
   const fetchPostsFromMongoDB = async () => {
     try {
+      // Check if we're in a static deployment (GitHub Pages)
+      const isStatic = process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && window.location.hostname === 'rafi1105.github.io';
+      
+      if (isStatic) {
+        // In static deployment, return empty array since API routes don't work
+        return [];
+      }
+      
       const response = await fetch('/api/posts');
       if (response.ok) {
         const data = await response.json();

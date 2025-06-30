@@ -14,6 +14,15 @@ export default function BlogPage() {
   const fetchUserBlogPosts = async () => {
     setIsLoading(true)
     try {
+      // Check if we're in a static deployment (GitHub Pages)
+      const isStatic = process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && window.location.hostname === 'rafi1105.github.io';
+      
+      if (isStatic) {
+        // In static deployment, return empty array since API routes don't work
+        setUserBlogPosts([]);
+        return;
+      }
+      
       const response = await fetch('/api/posts')
       const result = await response.json()
       
