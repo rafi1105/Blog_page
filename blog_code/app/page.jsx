@@ -7,6 +7,7 @@ import React from "react";
 import Link from "next/link";
 import Lottie from "lottie-react";
 import animationData from "../Animation - 1751031313621.json";
+import { getAssetPath } from "../lib/useBasePath";
 
 export default function Home() {
   const texts = ["Tailwind CSS", "Mechine Learning", "Python", "JavaScript"];
@@ -383,7 +384,7 @@ export default function Home() {
               <div className="relative">
                 <div className="w-68 h-98 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl shadow-blue-500/100">
                   <Image
-                    src="/rafi.jpg" // Replace with your actual profile image
+                    src={getAssetPath("rafi.jpg")} // Replace with your actual profile image
                     alt="Profile Picture"
                     width={350}
                     height={350}
@@ -448,7 +449,7 @@ export default function Home() {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a
-                  href="/cv/John_Doe_CV.pdf" // Replace with your actual CV path
+                  href={getAssetPath("cv/John_Doe_CV.pdf")} // Replace with your actual CV path
                   download="John_Doe_CV.pdf"
                   className="inline-flex items-center justify-center px-6 py-3 bg-red-800 hover:bg-red-900 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
@@ -517,7 +518,7 @@ function SearchResultCard({ post }) {
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="relative h-48">
         <Image
-          src={post.image || "/programming.png"}
+          src={post.image || getAssetPath("programming.png")}
           alt={post.title}
           fill
           className="object-cover"
@@ -579,7 +580,7 @@ function RecentPostCard({ post }) {
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1">
       <div className="relative h-40">
         <Image
-          src={post.image || "/programming.png"}
+          src={post.image || getAssetPath("programming.png")}
           alt={post.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"

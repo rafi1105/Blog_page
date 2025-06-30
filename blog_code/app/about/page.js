@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getAssetPath } from '../../lib/useBasePath'
 import { 
   Phone,
   Download,
@@ -119,7 +120,7 @@ const About = () => {
               <div className="relative">
                 <div className="w-68 h-98 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl shadow-red-500/100">
                   <Image
-                    src="/rafi.jpg" // Replace with your actual profile image
+                    src={getAssetPath("rafi.jpg")} // Replace with your actual profile image
                     alt="Profile Picture"
                     width={350}
                     height={350}
@@ -185,7 +186,7 @@ const About = () => {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a
-                  href="/cv/John_Doe_CV.pdf" // Replace with your actual CV path
+                  href={getAssetPath("cv/John_Doe_CV.pdf")} // Replace with your actual CV path
                   download="John_Doe_CV.pdf"
                   className="inline-flex items-center justify-center px-6 py-3 bg-red-800 hover:bg-red-900 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
