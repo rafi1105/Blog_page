@@ -3,7 +3,6 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getAssetPath } from '../../lib/useBasePath'
 import { 
   Phone,
   Download,
@@ -120,7 +119,7 @@ const About = () => {
               <div className="relative">
                 <div className="w-68 h-98 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl shadow-red-500/100">
                   <Image
-                    src={getAssetPath("rafi.jpg")} // Replace with your actual profile image
+                    src="/rafi.jpg" // Replace with your actual profile image
                     alt="Profile Picture"
                     width={350}
                     height={350}
@@ -186,7 +185,7 @@ const About = () => {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a
-                  href={getAssetPath("cv/John_Doe_CV.pdf")} // Replace with your actual CV path
+                  href="/cv/John_Doe_CV.pdf" // Replace with your actual CV path
                   download="John_Doe_CV.pdf"
                   className="inline-flex items-center justify-center px-6 py-3 bg-red-800 hover:bg-red-900 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
@@ -252,7 +251,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">About Me</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              I&apos;m a developer who believes in the power of technology to solve real-world problems 
+              I'm a developer who believes in the power of technology to solve real-world problems 
               and create meaningful experiences.
             </p>
           </div>
@@ -261,14 +260,14 @@ const About = () => {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">My Journey</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                With over 5 years of experience in web development, I&apos;ve had the privilege of working 
+                With over 5 years of experience in web development, I've had the privilege of working 
                 with startups, Fortune 500 companies, and everything in between. My journey began with 
                 a simple HTML page and has evolved into building complex, scalable applications that 
                 serve millions of users.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                I&apos;m passionate about clean code, user experience, and the latest web technologies. 
-                When I&apos;m not coding, you&apos;ll find me writing technical articles, contributing to open 
+                I'm passionate about clean code, user experience, and the latest web technologies. 
+                When I'm not coding, you'll find me writing technical articles, contributing to open 
                 source projects, or mentoring aspiring developers.
               </p>
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
@@ -311,7 +310,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Achievements</h2>
             <p className="text-lg text-muted-foreground">
-              Some milestones I&apos;m proud of in my journey as a developer.
+              Some milestones I'm proud of in my journey as a developer.
             </p>
           </div>
           

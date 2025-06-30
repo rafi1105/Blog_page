@@ -55,12 +55,23 @@ export default function ContentPage() {
   const [imagePreview, setImagePreview] = useState('')
   const [isUploadingImage, setIsUploadingImage] = useState(false)
 
-  // Fetch blog posts from MongoDB API
+  // Fetch blog posts from MongoDB API with fallback
   const fetchBlogPosts = async () => {
     setIsLoading(true)
     setError(null)
     try {
       const response = await fetch('/api/posts')
+      
+      // Check if we got an HTML error page instead of JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('API not available - using local storage fallback')
+      }
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
       
       if (result.success) {
@@ -70,7 +81,22 @@ export default function ContentPage() {
       }
     } catch (error) {
       console.error('Error fetching blog posts:', error)
-      setError('Failed to connect to the database')
+      
+      // Fallback to localStorage when API is not available
+      try {
+        const storedPosts = localStorage.getItem('blogPosts')
+        if (storedPosts) {
+          setBlogPosts(JSON.parse(storedPosts))
+          setError('Using local storage (API unavailable)')
+        } else {
+          setBlogPosts([])
+          setError('No posts found - create your first post below')
+        }
+      } catch (localStorageError) {
+        console.error('Error reading from localStorage:', localStorageError)
+        setBlogPosts([])
+        setError('Failed to load posts')
+      }
     } finally {
       setIsLoading(false)
     }
@@ -116,6 +142,16 @@ export default function ContentPage() {
         body: formData,
       })
 
+      // Check if we got an HTML error page instead of JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Image upload API not available - please use image URLs instead')
+      }
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
       const result = await response.json()
       
       if (result.success) {
@@ -140,27 +176,90 @@ export default function ContentPage() {
     try {
       let imageUrl = blogFormData.image
 
-      // Upload image if file is selected
+      // Upload image if file is selected (only works with API)
       if (imageFile) {
-        imageUrl = await uploadImage()
+        try {
+          imageUrl = await uploadImage()
+        } catch (uploadError) {
+          // If image upload fails, fall back to using URL or skip image
+          console.warn('Image upload failed, using form image URL:', uploadError)
+          imageUrl = blogFormData.image
+        }
       }
 
       const postData = {
         ...blogFormData,
-        image: imageUrl
+        image: imageUrl,
+        tags: blogFormData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       }
 
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
+      try {
+        const response = await fetch('/api/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postData),
+        })
+        
+        // Check if we got an HTML error page instead of JSON
+        const contentType = response.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('API not available - using local storage fallback')
+        }
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        
+        if (result.success) {
+          // Reset form
+          setBlogFormData({
+            title: '',
+            excerpt: '',
+            content: '',
+            author: '',
+            category: 'React',
+            tags: '',
+            image: '',
+            githubLink: '',
+            readTime: '',
+            featured: false
+          })
+
+          // Reset image state
+          setImageFile(null)
+          setImagePreview('')
+          
+          setSubmitStatus('success')
+          
+          // Refresh blog posts list
+          await fetchBlogPosts()
+          
+          setTimeout(() => setSubmitStatus(null), 5000)
+        } else {
+          setError(result.error || 'Failed to create blog post')
+          setSubmitStatus('error')
+          setTimeout(() => setSubmitStatus(null), 5000)
+        }
+      } catch (apiError) {
+        console.warn('API not available, saving to localStorage:', apiError)
+        
+        // Fallback to localStorage
+        const newPost = {
+          ...postData,
+          _id: Date.now().toString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          views: 0
+        }
+        
+        const existingPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]')
+        const updatedPosts = [newPost, ...existingPosts]
+        localStorage.setItem('blogPosts', JSON.stringify(updatedPosts))
+        
         // Reset form
         setBlogFormData({
           title: '',
@@ -180,19 +279,19 @@ export default function ContentPage() {
         setImagePreview('')
         
         setSubmitStatus('success')
+        setError('Saved to local storage (API unavailable)')
         
         // Refresh blog posts list
         await fetchBlogPosts()
         
-        setTimeout(() => setSubmitStatus(null), 5000)
-      } else {
-        setError(result.error || 'Failed to create blog post')
-        setSubmitStatus('error')
-        setTimeout(() => setSubmitStatus(null), 5000)
+        setTimeout(() => {
+          setSubmitStatus(null)
+          setError(null)
+        }, 5000)
       }
     } catch (error) {
       console.error('Error creating blog post:', error)
-      setError(error.message || 'Failed to connect to the database')
+      setError(error.message || 'Failed to create blog post')
       setSubmitStatus('error')
       setTimeout(() => setSubmitStatus(null), 5000)
     } finally {
@@ -210,6 +309,16 @@ export default function ContentPage() {
         method: 'DELETE',
       })
       
+      // Check if we got an HTML error page instead of JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('API not available - using local storage fallback')
+      }
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
       
       if (result.success) {
@@ -220,7 +329,21 @@ export default function ContentPage() {
       }
     } catch (error) {
       console.error('Error deleting blog post:', error)
-      setError('Failed to connect to the database')
+      
+      // Fallback to localStorage
+      try {
+        const existingPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]')
+        const updatedPosts = existingPosts.filter(post => post._id !== id)
+        localStorage.setItem('blogPosts', JSON.stringify(updatedPosts))
+        
+        // Refresh blog posts list
+        await fetchBlogPosts()
+        setError('Deleted from local storage (API unavailable)')
+        setTimeout(() => setError(null), 3000)
+      } catch (localStorageError) {
+        console.error('Error deleting from localStorage:', localStorageError)
+        setError('Failed to delete blog post')
+      }
     }
   }
 

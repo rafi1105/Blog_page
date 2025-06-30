@@ -10,20 +10,22 @@ export default function BlogPage() {
   const [userBlogPosts, setUserBlogPosts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  // Fetch user-created blog posts from MongoDB API
+  // Fetch user-created blog posts from MongoDB API with fallback
   const fetchUserBlogPosts = async () => {
     setIsLoading(true)
     try {
-      // Check if we're in a static deployment (GitHub Pages)
-      const isStatic = process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && window.location.hostname === 'rafi1105.github.io';
+      const response = await fetch('/api/posts')
       
-      if (isStatic) {
-        // In static deployment, return empty array since API routes don't work
-        setUserBlogPosts([]);
-        return;
+      // Check if we got an HTML error page instead of JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('API not available - using local storage fallback')
       }
       
-      const response = await fetch('/api/posts')
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
       
       if (result.success) {
@@ -33,6 +35,19 @@ export default function BlogPage() {
       }
     } catch (error) {
       console.error('Error fetching user blog posts:', error)
+      
+      // Fallback to localStorage when API is not available
+      try {
+        const storedPosts = localStorage.getItem('blogPosts')
+        if (storedPosts) {
+          setUserBlogPosts(JSON.parse(storedPosts))
+        } else {
+          setUserBlogPosts([])
+        }
+      } catch (localStorageError) {
+        console.error('Error reading from localStorage:', localStorageError)
+        setUserBlogPosts([])
+      }
     } finally {
       setIsLoading(false)
     }
@@ -166,12 +181,9 @@ export default function BlogPage() {
 
   const filteredPosts = allBlogPosts.filter(post => {
     const matchesFilter = activeFilter === 'all' || post.category === activeFilter
-    const matchesSearch = post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (post.tags && post.tags.some(tag => tag?.toLowerCase().includes(searchTerm.toLowerCase()))) ||
-                         post.author?.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
     return matchesFilter && matchesSearch
   })
 
@@ -183,12 +195,10 @@ export default function BlogPage() {
         
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="flex items-center justify-center space-x-2 my-3">
-                        <Code className="h-15 w-15 text-secondary dark:text-secondary" />
-                        <h3 className="text-4xl font-bold text-gray-900 dark:text-white">
-                          Code<span className='text-secondary font-bold dark:text-secondary'>_</span>Blog<span className='text-secondary font-bold dark:text-secondary'>.</span>
-                        </h3>
-                      </div>
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
+            Code<span className="text-orange-500">_</span>Blog
+            <span className="text-orange-500 text-5xl md:text-7xl">.</span>
+          </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Discover the latest in web development, coding tutorials, and open-source projects. 
             Join our community of developers sharing knowledge and building amazing things.
@@ -232,10 +242,10 @@ export default function BlogPage() {
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Featured Posts</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {featuredPosts.map((post, index) => (
+              {featuredPosts.map((post) => (
                 <div
-                  key={post._id || post.id || `featured-post-${index}`}
-                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:bg-white/80 dark:hover:bg-gray-800/80"
+                  key={post.id}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
                 >
                   <div className="relative overflow-hidden">
                     <img
@@ -244,12 +254,12 @@ export default function BlogPage() {
                       className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-orange-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                      <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-medium">
                         Featured
                       </span>
                     </div>
                     <div className="absolute top-4 right-4">
-                      <span className="bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                      <span className="bg-black/70 text-white px-3 py-1 rounded-full text-xs font-medium">
                         {post.category}
                       </span>
                     </div>
@@ -265,9 +275,9 @@ export default function BlogPage() {
                     
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map((tag, index) => (
+                      {post.tags.map((tag) => (
                         <span
-                          key={`${post._id || post.id || 'featured'}-tag-${index}-${tag}`}
+                          key={tag}
                           className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-md"
                         >
                           {tag}
@@ -330,10 +340,10 @@ export default function BlogPage() {
               </Link>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {userBlogPosts.slice(0, 6).map((post, index) => (
+              {userBlogPosts.slice(0, 6).map((post) => (
                 <div
-                  key={post._id || post.id || `user-post-${index}`}
-                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:bg-white/80 dark:hover:bg-gray-800/80"
+                  key={post._id || post.id}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700"
                 >
                   <div className="relative overflow-hidden h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900">
                     {post.image ? (
@@ -348,12 +358,12 @@ export default function BlogPage() {
                       </div>
                     )}
                     <div className="absolute top-4 right-4">
-                      <span className="bg-green-500/90 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
+                      <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
                         Community
                       </span>
                     </div>
                     <div className="absolute top-4 left-4">
-                      <span className="bg-black/70 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
+                      <span className="bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
                         {post.category}
                       </span>
                     </div>
@@ -371,7 +381,7 @@ export default function BlogPage() {
                     <div className="flex flex-wrap gap-1 mb-4">
                       {(post.tags || []).slice(0, 3).map((tag, index) => (
                         <span
-                          key={`${post._id || post.id || 'post'}-tag-${index}-${tag}`}
+                          key={index}
                           className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
                         >
                           {tag}
@@ -435,10 +445,10 @@ export default function BlogPage() {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post, index) => (
+            {filteredPosts.map((post) => (
               <article
-                key={post._id || post.id || `filtered-post-${index}`}
-                className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group hover:bg-white/80 dark:hover:bg-gray-800/80"
+                key={post.id}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
               >
                 <div className="relative overflow-hidden">
                   <img
@@ -447,13 +457,13 @@ export default function BlogPage() {
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 right-4">
-                    <span className="bg-black/70 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
+                    <span className="bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
                       {post.category}
                     </span>
                   </div>
                   {post.featured && (
                     <div className="absolute top-4 left-4">
-                      <span className="bg-orange-500/90 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
+                      <span className="bg-orange-500 text-white px-2 py-1 rounded text-xs font-medium">
                         Featured
                       </span>
                     </div>
@@ -470,9 +480,9 @@ export default function BlogPage() {
                   
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-4">
-                    {post.tags.slice(0, 3).map((tag, index) => (
+                    {post.tags.slice(0, 3).map((tag) => (
                       <span
-                        key={`${post._id || post.id || 'filtered'}-tag-${index}-${tag}`}
+                        key={tag}
                         className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
                       >
                         {tag}
@@ -550,10 +560,10 @@ export default function BlogPage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {repositories.map((repo, index) => (
+            {repositories.map((repo) => (
               <div
-                key={repo.id || `repo-${index}`}
-                className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/80 dark:hover:bg-gray-800/80"
+                key={repo.id}
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-2">
@@ -572,9 +582,9 @@ export default function BlogPage() {
                 </p>
                 
                 <div className="flex flex-wrap gap-1 mb-4">
-                  {repo.topics.slice(0, 3).map((topic, index) => (
+                  {repo.topics.slice(0, 3).map((topic) => (
                     <span
-                      key={`${repo.id || 'repo'}-topic-${index}-${topic}`}
+                      key={topic}
                       className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded"
                     >
                       {topic}
@@ -609,7 +619,7 @@ export default function BlogPage() {
 
         {/* Newsletter Section */}
         <section className="text-center">
-          <div className="bg-gradient-to-r from-blue-600/90 to-purple-600/90 backdrop-blur-lg border border-white/20 rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Stay Updated with Latest Posts
             </h2>
@@ -620,9 +630,9 @@ export default function BlogPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none backdrop-blur-sm bg-white/90"
+                className="flex-1 px-4 py-3 rounded-lg border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none"
               />
-              <button className="px-6 py-3 bg-white/90 backdrop-blur-sm text-blue-600 rounded-lg font-semibold hover:bg-white transition-colors">
+              <button className="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 Subscribe
               </button>
             </div>
