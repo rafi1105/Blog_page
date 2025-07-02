@@ -271,6 +271,20 @@ function ModeToggle() {
 
 ![amination image](image-1.png)
 
+ - **or**
+ `npm install @lottiefiles/dotlottie-react`
+ `import { DotLottieReact } from '@lottiefiles/dotlottie-react';`
+ ```javascript
+<div className="relative z-10 w-full h-96">
+                <DotLottieReact
+                  src="https://lottie.host/2c8b85ae-01f2-4d69-b136-7d959df4b140/GKKwfJT0zA.lottie"
+                  loop
+                  autoplay
+                  className="w-full h-full object-contain"
+                />
+              </div>
+ ```
+
 - #### Add text animation **typing**:
 > JavaScript 
 ```javaScript
